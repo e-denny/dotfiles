@@ -1,0 +1,8 @@
+
+# Tmux
+alias tn='tmux new -s'
+alias ta='tmux a -t'
+alias tl='tmux list-sessions'
+alias tkss='tmux kill-session -t'
+alias tksv='tmux kill-server'
+
