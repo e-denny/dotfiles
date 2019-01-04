@@ -1,0 +1,333 @@
+
+[colors]
+; gruvbox colors                                                                                                                            
+;dark0_hard = #1d2021                                                                                                                                             
+;dark0 = #282828                                                                                                                                                  
+background = #32302f                                                                                                                                             
+;dark1 = #3c3836                                                                                                                                                  
+dark2 = #504945                                                                                                                                                  
+;dark3 = #665c54                                                                                                                                                  
+dark4 = #7c6f64                                                                                                                                                  
+                                                                                                                                                               
+;gray = #928374                                                                                                                                                   
+                                                                                                                                                               
+;light0_hard = #f9f5d7                                                                                                                                            
+;light0 = #fbf1c7                                                                                                                                                 
+;light0_soft = #f2e5bc                                                                                                                                            
+foreground = #ebdbb2                                                                                                                                                 
+;light2 = #d5c4a1                                                                                                                                                 
+;light3 = #bdae93                                                                                                                                                 
+;light4 = #a89984                                                                                                                                                 
+                                                                                                                                                               
+;bright_red = #fb4934                                                                                                                                             
+;bright_green = #b8bb26                                                                                                                                           
+;bright_yellow = #fabd2f                                                                                                                                          
+;bright_blue = #83a598                                                                                                                                            
+;bright_purple = #d3869b                                                                                                                                          
+;bright_aqua = #8ec07c                                                                                                                                            
+;bright_orange = #fe8019                                                                                                                                          
+                                                                                                                                                               
+;neutral_red = #cc241d                                                                                                                                            
+;neutral_green = #98971a                                                                                                                                          
+;neutral_yellow = #d79921                                                                                                                                         
+;neutral_blue = #458588                                                                                                                                           
+;neutral_purple = #b16286                                                                                                                                         
+;neutral_aqua = #689d6a                                                                                                                                           
+;neutral_orange = #d65d0e                                                                                                                                         
+                                                                                                                                                               
+warn = #9d0006                                                                                                                                              
+;faded_green = #79740e                                                                                                                                            
+;faded_yellow = #b57614                                                                                                                                           
+;faded_blue = #076678                                                                                                                                             
+faded_purple = #8f3f71                                                                                                                                           
+;faded_aqua = #427b58                                                                                                                                             
+;faded_orange = #af3a03
+
+[bar/mybar]
+monitor = "eDP-1"
+width = 100%
+height = 40
+radius = 6.0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 4
+border-color = #00000000
+
+padding-left = 0
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = DejaVuSansMono Nerd Font Mono:pixelsize=16;1 
+font-1 = DejaVuSansMono Nerd Font Mono:pixelsize=16;1 
+font-2 = icomoon:pixelsize=16;1 
+
+modules-left = i3
+modules-right = filesystem xkeyboard memory cpu wlan battery temperature date powermenu
+
+tray-position = right
+
+; contents when the tray changes
+tray-detached = false
+
+tray-maxsize = 28
+
+; tray-background = ${root.background}
+
+tray-offset-x = 0
+tray-offset-y = 0
+
+tray-padding = 0
+
+tray-scale = 1
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+; format-prefix-foreground = ${colors.foreground}
+; format-prefix-underline = ${colors.warn}
+
+label-layout = %layout%
+; label-layout-underline = ${colors.warn}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+; label-indicator-background = ${colors.warn}
+; label-indicator-underline = ${colors.warn}
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground}
+
+[module/i3]
+type = internal/i3
+in-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+
+fuzzy-match = true
+
+ws-icon-0 = 1;♚
+ws-icon-1 = 2;♛
+ws-icon-2 = 3;♜
+ws-icon-3 = 4;♝
+ws-icon-4 = 5;♞
+ws-icon-default = ♟
+
+label-dimmed-underline = ${root.background}
+format = <label-state> <label-mode>
+label-mode = %mode%
+label-mode-padding = 0
+label-mode-background = #e60053
+
+label-focused =  %index%
+label-focused-foreground = ${colors.foreground}
+label-focused-background = #3f3f3f
+label-focused-underline = #fba922
+label-focused-padding = 2
+
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+label-visible = %index%
+label-visible-underline = #555555
+label-visible-padding = 2
+
+label-urgent = %index%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-padding = 2
+
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 0
+label-separator-foreground = ${colors.foreground}
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = ""
+format-prefix-foreground = ${colors.foreground}
+; format-background = ${colors.dark2}
+format-padding = 1 
+; format-underline = #f90000
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground}
+; format-underline = #4bffdc
+; format-background = ${colors.dark2}
+format-padding = 1 
+label = %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface = wlp1s0
+interval = 10
+
+format-connected = <ramp-signal> <label-connected>
+; format-connected-underline = #9f78e1
+label-connected = %essid%
+
+format-disconnected = ﲁ
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground}
+
+ramp-signal-0 = ﲁ
+ramp-signal-1 = 說
+ramp-signal-2 = 說
+ramp-signal-3 = 說
+ramp-signal-4 = 說
+ramp-signal-foreground = ${colors.foreground}
+
+[module/date]
+type = internal/date
+interval = 5
+
+date =
+date-alt = " %Y-%m-%d"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${colors.foreground}
+; format-underline = #0a6cf5
+
+label = %date% %time%
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+; format-charging-underline = #ffb52a
+
+format-discharging = <animation-discharging> <label-discharging>
+; format-discharging-underline = ${self.format-charging-underline}
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground}
+; format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.foreground}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = ${colors.foreground}
+animation-charging-framerate = 750
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 =  
+animation-discharging-3 = 
+animation-discharging-4 = 
+animation-discharging-foreground = ${colors.foreground}
+animation-discharging-framerate = 750
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+; format-underline = #f50a4d
+format-warn = <ramp> <label-warn>
+; format-warn-underline = ${self.format-underline}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.warn}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colors.foreground}
+
+[module/powermenu]
+type = custom/menu
+
+expand-right = true
+
+format-spacing = 1
+
+;label-open = ⏻
+;label-open-foreground = ${colors.foreground}
+;label-close = ﰸ cancel
+;label-close-foreground = ${colors.warn}
+;label-separator = |
+;label-separator-foreground = ${colors.foreground}
+
+;menu-0-0 = ﰇ reboot
+;menu-0-0-exec = menu-open-1
+;menu-0-1 = ⭘ power off
+;menu-0-1-exec = menu-open-2
+
+;menu-1-0 = ﰸ cancel
+;menu-1-0-exec = menu-open-0
+;menu-1-1 = ﰇ reboot
+;menu-1-1-exec = sudo reboot
+
+;menu-2-0 = ⭘ power off
+;menu-2-0-exec = sudo poweroff
+;menu-2-1 = ﰸ cancel
+;menu-2-1-exec = menu-open-0
+
+label-open = ⏻
+label-close = ﰸ cancel
+label-separator = |
+
+menu-0-0 =  poweroff
+menu-0-0-exec = systemctl poweroff
+menu-0-1 = 累 reboot
+menu-0-1-exec = systemctl reboot
+menu-0-2 =  logout 
+menu-0-2-exec = i3-msg exit
+menu-0-3 =  suspend
+menu-0-3-exec = systemctl suspend
+menu-0-4 =  lock
+menu-0-4-exec = i3lock -ni /home/user/.config/i3/lock.png
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
