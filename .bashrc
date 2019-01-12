@@ -74,6 +74,7 @@ xterm*|rxvt*)
     ;;
 esac
 
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 if [ -f `which powerline-daemon` ]; then  
   powerline-daemon -q  
   POWERLINE_BASH_CONTINUATION=1  
@@ -122,3 +123,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
+# export FZF_COMPLETION_TRIGGER='**'
+# Options to fzf command
+# export FZF_COMPLETION_OPTS='+c -x'
