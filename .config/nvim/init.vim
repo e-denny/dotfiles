@@ -1,7 +1,7 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible
+filetype off
 
-" vim-plug---------------------------------------- {{{ 
+" vim-plug---------------------------------------- {{{
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -20,18 +20,24 @@ Plug 'davidhalter/jedi-vim'
 Plug 'w0rp/ale'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 Plug 'airblade/vim-gitgutter'
-Plug 'nathanaelkane/vim-indent-guides' 
+Plug 'thaerkh/vim-indentguides'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
-
+Plug 'kalekundert/vim-coiled-snake'
+Plug 'Konfekt/FastFold'
+Plug 'mhinz/vim-startify'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'lilydjwg/colorizer'
 
 " Initialize plugin system
 call plug#end()
 
-" }}} 
-" General Settings ---------------------------------------- {{{ 
+" }}}
+" General Settings ---------------------------------------- {{{
 "
 filetype plugin indent on
 syntax enable
@@ -66,25 +72,36 @@ set splitbelow
 set splitright
 set wildmenu
 set wildmode=longest:full,list:full
-
+" set paste toggle
+set pastetoggle=<leader>v
 
 " leader
 let mapleader = "\<Space>"
 
-" }}} 
-" Plugin Configuration ---------------------------------------- {{{ 
-"
+" ctags
+set tags=./.tags;/
+
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+noremap <Leader>w :call TrimWhitespace()<CR>
+
+" }}}
+" Plugin Configuration ---------------------------------------- {{{
 " colorscheme ------------------------------------------------ {{{
 colorscheme gruvbox
 set background=dark
 let g:gruvbox_contrast_dark = 'soft'
 
 " }}}
-" airline ---------------------------------------- {{{ 
+" airline ---------------------------------------- {{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -100,7 +117,7 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 " }}}
-" vim-which-key---------------------------------------- {{{ 
+" vim-which-key---------------------------------------- {{{
 "
 nnoremap <silent> <leader> :<C-u>WhichKey '<Space>'<CR>
 set timeoutlen=1000
@@ -155,16 +172,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 " }}}
-" vim-indent-guides ---------------------------------------- {{{ 
-"
-let g:indent_guides_enable_on_vim_startup = 1
-
-let g:indent_guides_auto_colors = 1
-let g:indent_guides_start_level = 2
-let g:indent_guides_guide_size = 1
-
-" }}}
-" deopulate ---------------------------------------- {{{ 
+" deopulate ---------------------------------------- {{{
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -176,29 +184,24 @@ call deoplete#custom#source('_',
 call deoplete#custom#option('sources', {
     \ 'python': ['LanguageClient'],
 \})
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<Down>" :
+      \ <SID>is_whitespace() ? "\<TAB>" :
+      \  deoplete#manual_complete()
+
+inoremap <expr> <S-Tab> pumvisible() ? "\<Up>" : "\<S-Tab>"
+
+function! s:is_whitespace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " deoplete tab-complete
-"let g:deoplete#disable_auto_complete = 1
-let b:deoplete_disable_auto_complete=1
-
-imap <silent><expr><Tab> pumvisible() ? "\<Down>"
-	\ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
-	\ : (<SID>is_whitespace() ? "\<Tab>"
-    \ : deoplete#manual_complete()))
-
-smap <silent><expr><Tab> pumvisible() ? "\<Down>"
-	\ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
-	\ : (<SID>is_whitespace() ? "\<Tab>"
-	\ : deoplete#manual_complete()))
-
-inoremap <expr><S-Tab> pumvisible() ? "\<Up>" : "\<C-h>"
-
-"inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-"imap <expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>\<Plug>AutoPairsReturn"
+call deoplete#custom#option('auto_complete', v:false)
 
 "   }}} deoplulate
-" LanguageClient-neovim ---------------------------------------- {{{ 
+" LanguageClient-neovim ---------------------------------------- {{{
 
 " Required for operations modifying multiple buffers like rename.
 set hidden
@@ -214,8 +217,8 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-" }}} 
-" vim-jedi ---------------------------------------- {{{ 
+" }}}
+" vim-jedi ---------------------------------------- {{{
 
 let g:jedi#popup_on_dot = 0
 let g:jedi#completions_enabled = 0 " using deoplete instead
@@ -228,8 +231,8 @@ let g:jedi#usages_command = "<leader>n"
 " let g:jedi#completions_command = "<C-Space>"
 " let g:jedi#rename_command = "<leader>r"
 
-" }}} 
-" ale ---------------------------------------- {{{ 
+" }}}
+" ale ---------------------------------------- {{{
 
 " run linter only on save
 " let g:ale_lint_on_text_changed = 'never'
@@ -245,7 +248,7 @@ let g:ale_fixers = {
 let g:ale_fix_on_save = 1
 
 " }}}
-" vim-fugitive ---------------------------------------- {{{ 
+" vim-fugitive ---------------------------------------- {{{
 
 nmap <leader>gb :Gblame<cr>
 nmap <leader>gs :Gstatus<cr>
@@ -270,7 +273,7 @@ let g:webdevicons_enable_airline_statusline = 1
 " tagbar ---------------------------------------- {{{
 
 map <leader>tg :TagbarToggle<CR>
- 
+
 let g:tagbar_sort=0
 let g:tagbar_right = 1
 let g:tagbar_autoclose = 1
@@ -279,44 +282,52 @@ let g:tagbar_autofocus = 1
 let g:tagbar_compact = 0
 let g:tagbar_iconchars = ['▸', '▾']
 
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
+" let g:tagbar_type_XXX = { }
 
 " }}}
-" gutentags---------------------------------------- {{{  
+" gutentags---------------------------------------- {{{
 
 " if executable('ctags')
 "   call add(g:gutentags_modules, 'ctags')
 " endif
 
 " }}}
+" SimplyFold ---------------------------------------- {{{
+let g:SimpylFold_docstring_preview = 1
 " }}}
-" Mappings ---------------------------------------- {{{ 
+" vim-indentguides ---------------------------------------- {{{
+
+let g:indentguides_ignorelist = ['text', 'vim']
+" let g:indentguides_spacechar = '┆'
+let g:indentguides_spacechar = '▏'
+
+let g:indent_guides_enable_on_vim_startup = 1
+
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+" }}}
+" utlisnips ---------------------------------------- {{{
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-s>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" }}}
+" colorizer ---------------------------------------- {{{
+let g:colorizer_nomap = 1
+let g:colorizer_maxlines = 1000
+" This plugin defines three commands:
+" 	ColorHighlight	- start/update highlighting
+" 	ColorClear      - clear all highlights
+" 	ColorToggle     - toggle highlights
+" }}}
+" }}}
+" Mappings ---------------------------------------- {{{
 
 " clear search highlight
 nnoremap <silent> // :noh<cr>
@@ -325,7 +336,7 @@ nnoremap <silent> // :noh<cr>
 nnoremap <leader>tn :setlocal number!<cr>
 
 " toggle highlighting the cursor line
-nnoremap <leader>tc :set cursorline!<cr> 
+nnoremap <leader>tc :set cursorline!<cr>
 
 " window navigation
 noremap <C-h> <C-w>h
@@ -344,8 +355,5 @@ nnoremap [b :bprev<cr>
 " Toggle NERD Tree
 nnoremap <leader>tt :NERDTreeToggle<cr>
 " }}}
-
-" ctags
-set tags=./tags;/
 
 " vim:fdm=marker foldlevel=0

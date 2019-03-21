@@ -9,6 +9,7 @@
 #umask 022
 
 export GDK_SCALE=2
+# export GDK_DPI_SCALE=2
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then

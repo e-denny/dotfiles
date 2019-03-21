@@ -52,9 +52,8 @@ line-size = 3
 line-color = #f00
 
 border-size = 4
-border-color = #00000000
 
-padding-left = 0
+padding-left = 1
 padding-right = 1
 
 module-margin-left = 1
@@ -65,20 +64,15 @@ font-1 = DejaVuSansMono Nerd Font Mono:pixelsize=16;1
 font-2 = icomoon:pixelsize=16;1 
 
 modules-left = i3 title
-modules-right = filesystem xkeyboard memory cpu wlan battery temperature date powermenu
+modules-right = bluetooth filesystem xkeyboard memory cpu wlan battery temperature date powermenu
 
 tray-position = right
-
 ; contents when the tray changes
 tray-detached = false
-
 tray-maxsize = 28
-
 tray-offset-x = 0
 tray-offset-y = 0
-
 tray-padding = 0
-
 tray-scale = 1
 
 scroll-up = i3wm-wsnext
@@ -86,6 +80,47 @@ scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 
+[bar/mybar2]
+monitor = "DP-2"
+width = 100%
+height = 40
+radius = 6.0
+fixed-center = false
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 4
+
+padding-left = 1
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = DejaVuSansMono Nerd Font Mono:pixelsize=16;1 
+font-1 = DejaVuSansMono Nerd Font Mono:pixelsize=16;1 
+font-2 = icomoon:pixelsize=16;1 
+
+modules-left = i3 title
+modules-right = bluetooth filesystem xkeyboard memory cpu wlan battery temperature date powermenu
+
+tray-position = right
+; contents when the tray changes
+tray-detached = false
+tray-maxsize = 28
+tray-offset-x = 0
+tray-offset-y = 0
+tray-padding = 0
+tray-scale = 1
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
@@ -112,15 +147,18 @@ type = internal/i3
 in-workspaces = true
 strip-wsnumbers = true
 index-sort = true
+; pin-workspaces = true
 
 fuzzy-match = true
 
-ws-icon-0 = 1;♚
-ws-icon-1 = 2;♛
-ws-icon-2 = 3;♜
-ws-icon-3 = 4;♝
-ws-icon-4 = 5;♞
-ws-icon-default = ♟
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+
+ws-icon-default = 
 
 label-dimmed-underline = ${root.background}
 format = <label-state> <label-mode>
@@ -128,26 +166,22 @@ label-mode = %mode%
 label-mode-padding = 0
 label-mode-background = #e60053
 
-label-focused =  %index%
+label-focused =  %index%:%icon%
 label-focused-foreground = ${colors.foreground}
 label-focused-background = #3f3f3f
-label-focused-underline = #fba922
-label-focused-padding = 2
+label-focused-padding = 1
 
-label-unfocused = %index%
-label-unfocused-padding = 2
+label-unfocused = %index%:%icon%
+label-unfocused-padding = 1
 
-label-visible = %index%
-label-visible-underline = #555555
-label-visible-padding = 2
+label-visible = %index%:%icon%
+label-visible-padding = 1
 
-label-urgent = %index%
+label-urgent = %index%:%icon%
 label-urgent-foreground = #000000
 label-urgent-background = #bd2c40
-label-urgent-padding = 2
+label-urgent-padding = 1
 
-; Separator in between workspaces
-label-separator = |
 label-separator-padding = 0
 label-separator-foreground = ${colors.foreground}
 
@@ -167,6 +201,19 @@ format-prefix-foreground = ${colors.foreground}
 format-padding = 1 
 label = %percentage_used%%
 
+; [module/weather]
+; type = custom/script
+; exec = ~/.config/polybar/weather.sh
+; interval = 400
+; label-font = 5
+
+[module/bluetooth]
+type = custom/script
+exec = ~/.config/polybar/bluetooth.sh
+interval = 3.0
+# click_left = ~/.config/polybar/bluetooth-toggle.sh
+
+
 [module/wlan]
 type = internal/network
 interface = wlp1s0
@@ -176,10 +223,6 @@ format-connected = <ramp-signal> <label-connected>
 label-connected = %essid%
 
 format-disconnected = ﲁ
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground}
 
 ramp-signal-0 = ﲁ
 ramp-signal-1 = 說
@@ -231,11 +274,11 @@ animation-charging-4 = 
 animation-charging-foreground = ${colors.foreground}
 animation-charging-framerate = 750
 
-animation-discharging-0 = 
-animation-discharging-1 = 
+animation-discharging-0 = 
+animation-discharging-1 = 
 animation-discharging-2 =  
-animation-discharging-3 = 
-animation-discharging-4 = 
+animation-discharging-3 = 
+animation-discharging-4 = 
 animation-discharging-foreground = ${colors.foreground}
 animation-discharging-framerate = 750
 
