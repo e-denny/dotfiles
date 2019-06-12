@@ -13,3 +13,15 @@ Templates
 tips  
 txt
 Videos
+.cache/chromium
+.emacs~
+.xsession-errors
+.xsession-errors.old
+.Xauthority
+.bash_history
+.bash_logout
+.tags
+.ICEauthority
+.fehbg
+.python_history
+.viminfo

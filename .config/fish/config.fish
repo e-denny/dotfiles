@@ -18,5 +18,3 @@ set -g theme_display_user yes
 set -gx FZF_DEFAULT_COMMAND 'ag --hidden --ignore .git -g ""'
 set -gx FZF_DEFAULT_OPTS '--height 40% --border --inline-info'
 
-set -gx GDK_SCALE 2
-
