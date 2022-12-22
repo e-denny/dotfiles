@@ -1,0 +1,237 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+
+set $emacs "emacsclient -a '' -c"
+
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+
+#set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu wofi --show drun --allow-images --allow-markup swaymsg exec --
+# $menu dmenu_path | bemenu -biwn -l 10 | xargs swaymsg --
+# set $menu $dmenu_path | wofi --dmenu | xargs swaymsg exec --
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output * bg ~/.config/sway/116096-dark-grey-background-1920x1080-meizu.jpg fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# output DP-1 scale 2
+focus output DP-1
+
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+### Font
+font pango:DejaVuSansMono 14
+
+### Idle configuration
+#
+# Example configuration:
+#exi
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' \
+#               resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+
+# pointer size
+seat seat0 xcursor_theme "Adwaita" 36
+# seat seat0 xcursor-theme default 30
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $emacs
+
+    # Kill focused window
+    bindsym $mod+c kill
+
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+#    floating_modifier Mod4 normal
+
+    # Reload the configuration file
+    bindsym $mod+r reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+h focus left
+    bindsym $mod+j focus down
+    bindsym $mod+k focus up
+    bindsym $mod+l focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+h move left
+    bindsym $mod+Shift+j move down
+    bindsym $mod+Shift+k move up
+    bindsym $mod+Shift+l move right
+
+#
+# Workspaces:
+#
+# Workspace names
+# to display names or symbols instead of plain workspace numbers you can use
+# something like: set $ws1 1:mail
+#                 set $ws2 2:
+
+workspace 0 output eDP-1
+workspace 1 output DP-1
+workspace 2 output DP-1
+workspace 3 output DP-1
+workspace 4 output DP-1
+
+
+    # Switch to workspace
+    bindsym $mod+0 workspace 0
+    bindsym $mod+1 workspace 1
+    bindsym $mod+2 workspace 2
+    bindsym $mod+3 workspace 3
+    bindsym $mod+4 workspace 4
+
+    bindsym $mod+n workspace next_on_output
+    bindsym $mod+p workspace prev_on_output
+
+    # Move focused container to workspace
+    bindsym $mod+Shift+0 move container to workspace 0
+    bindsym $mod+Shift+1 move container to workspace 1
+    bindsym $mod+Shift+2 move container to workspace 2
+    bindsym $mod+Shift+3 move container to workspace 3
+    bindsym $mod+Shift+4 move container to workspace 4
+
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+   bindsym $mod+s split horizontal
+   bindsym $mod+v split vertical
+
+    # Switch the current container between different layout styles
+    bindsym $mod+x layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+t floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    bindsym h resize shrink width 10px
+    bindsym j resize grow height 10px
+    bindsym k resize shrink height 10px
+    bindsym l resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 1i0px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+r mode "resize"
+
+# screen shots
+bindsym Print exec grim ~/Pictures/Screenshots/$(date +'%F-%T.png')
+bindsym --release Shift+Print exec slurp | grim -g - -c ~/Pictures/Screenshots/$(date +'%F-%T_region.png')
+
+# startup software
+exec blueman-applet        # bluetooth status applet
+exec nm-applet --indicator # network-manager-applet-indicator from AUR
+# exec redshift-gtk
+
+# switch off screen when idle
+exec --no-startup-id swayidle \
+     timeout 300 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'
+
+# applications
+#bindsym $mod+Shift+b exec firefox
+#bindsym $mod+Shift+c exec emacs
+#bindsym $mod+Shift+z exec emacsclient -c -a emacs
+
+client.focused #cdcdcd #cdcdcd #cdcdcd #cdcdcd
+
+# gaps
+#smart_gaps on
+default_border pixel 4
+default_floating_border normal
+#smart_borders on
+gaps inner 15
+gaps outer 0
+show_marks yes
+
+# add X or wayland session to title
+# for_window [shell=".*"] title_format "%title :: %shell"
+
+exec waybar
+
+include /etc/sway/config.d/*

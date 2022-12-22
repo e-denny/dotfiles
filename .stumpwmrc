@@ -1,0 +1,172 @@
+;; -*-lisp-*-
+;;
+;; My .stumpwmrc file
+
+(in-package :stumpwm)
+
+
+
+;; debug
+;; ========================================
+(setf *home-dir* (make-pathname :directory "/home/edgar/.stumpwm.d")
+      *data-dir* (merge-pathnames (make-pathname :directory
+                 '(:relative "conf" "stumpwm" "storage")) *home-dir*)
+      *debug-level* 10)
+
+(defvar *debug-restream* nil)
+
+(defun redirect-debug (file)
+  "Redirect *debug-stream* directly to a file."
+  (when (typep *debug-restream* 'file-stream)
+    (close *debug-restream*))
+  (setf *debug-restream* (open file :direction :output :if-exists :append
+                         :if-does-not-exist :create)
+        *debug-stream* *debug-restream*))
+
+;; setup debug-file variable for referencing (e.g. quitting) purposes.
+(defvar *debug-file* (data-dir-file "log" "lisp"))
+
+(redirect-debug *debug-file*)
+
+;; (redirect-all-output (data-dir-file "debug" "log"))
+
+;; swank
+;; ========================================
+
+;; rat
+;; ========================================
+;; mouse click will focus window
+(setf *mouse-focus-policy* :click)
+
+;; fonts
+;; ========================================
+;; set font - project no longer in quicklisp - use local project
+(push "~/quicklisp/local-projects/clx-truetype" ql:*local-project-directories*)
+(ql:quickload "clx-truetype")
+(load-module "ttf-fonts")
+(clx-truetype:cache-fonts)
+(set-font (make-instance 'xft:font :family "DejaVu Sans Mono" :subfamily "Book" :size 15))
+;; (set-font (make-instance 'xft:font :family "Iosevka" :subfamily "Medium" :size 12))
+
+;; Handy font functions:
+;; (clx-truetype:cache-fonts)
+;; (clx-truetype:get-font-families)
+;; (clx-truetype:get-font-subfamilies "Fira Mono Medium")
+;; clx-truetype::*font-dirs*
+
+;; tray
+;; ========================================
+
+;; (load-module "stumptray")
+;; (stumpwm:run-commands "stumptray")
+
+;; (run-shell-command "stalonetray -t --window-type normal --pixmap-bg ~/Dropbox/home/black-1x1.xpm -v -t")
+
+;; From http://archive.ubuntu.com/ubuntu/pool/universe/t/trayer/
+;; (run-shell-command "/usr/bin/trayer --SetDockType false --transparent true --expand false")
+
+;; (run-shell-command "/usr/bin/gnome-settings-daemon")
+;; (run-shell-command "/usr/bin/nm-applet &")
+;; (run-shell-command "/usr/bin/bluetooth-applet &")
+;; (run-shell-command "/usr/bin/pactl load-module module-x11-xsmp &")
+;; (run-shell-command "gnome-power-manager")
+;; (run-shell-command "dropbox start")
+;; (run-shell-command "nautilus --no-default-window")
+
+
+;; Message window
+;; ========================================
+(set-fg-color "white")
+(set-bg-color "#111111")
+(set-border-color "white")
+
+(setf *message-window-padding* 15
+      *message-window-y-padding* 15)
+
+;; ; :top-left :top-right :bottom-left :bottom-right :center
+(setq *message-window-gravity* :center)
+
+;;;; Input window gravity
+;; ; :top-left :top-right :bottom-left :bottom-right :center
+(setq *input-window-gravity* :center)
+
+;; Set the default gravity for transient/pop-up windows.
+(set-transient-gravity :center)
+
+;; Mode Line
+;; ========================================
+(setf *window-format* "%m%n%s%c")
+(setf *screen-mode-line-format* (list "[^B%n^b] %W^>%d"))
+(setf *time-modeline-string* "%a %b %e %k:%M")
+(setf *mode-line-timeout* 2)
+
+(setf *mode-line-position* :bottom)
+
+(setf *mode-line-background-color* "black")
+(setf *mode-line-foreground-color* "white")
+(setf *mode-line-border-color* "black")
+
+(setf *mode-line-border-width* 1)
+
+(setf *mode-line-timeout* 1)
+
+(setf *screen-mode-line-format*
+      (list "[^B%n^b] %W | %g | "
+            '(:eval (stumpwm:run-shell-command "date" t))))
+
+(enable-mode-line (current-screen) (current-head) t)
+
+;; Window borders
+;; ========================================
+;; set the border color for focused windows
+(set-focus-color "green")
+(set-unfocus-color "black")
+
+;; What is this?
+(set-win-bg-color "#DCDAD5")
+
+;; Use thin window border.
+(setf *window-border-style* :thin)
+
+;; width in pixels given to the borders of windows with maxsize or ratio
+;; hints
+(setf *maxsize-border-width* 5)
+
+;; width in pixels given to the borders of transient or pop-up windows
+(setf *transient-border-width* 5)
+
+;; width in pixels given to the borders of regular windows
+(setf *normal-border-width* 5)
+
+;; Functions
+;; ========================================
+
+(defcommand rotate-windows () ()
+  "Rotate windows"
+  (let* ((frames (group-frames (current-group)))
+         (win (frame-window (car (last frames)))))
+    (shift-windows-forward frames win)))
+
+;; launch Web browser
+(defcommand firefox () ()
+  "Start Firefox or switch to it, if it is already running."
+  (run-or-raise "firefox" '(:class "Firefox")))
+(define-key *root-map* (kbd "f") "firefox")
+
+;; Key Bindings
+;; ========================================
+
+(define-key *top-map* (kbd "C-M-S-i") "move-focus up")
+(define-key *top-map* (kbd "C-M-s-k") "move-focus down")
+(define-key *top-map* (kbd "C-M-s-j") "move-focus left")
+(define-key *top-map* (kbd "C-M-s-l") "move-focus right")
+
+(define-key *top-map* (kbd "C-M-S-I") "move-window up")
+(define-key *top-map* (kbd "C-M-s-K") "move-window down")
+(define-key *top-map* (kbd "C-M-s-J") "move-window left")
+(define-key *top-map* (kbd "C-M-s-L") "move-window right")
+
+(define-key *root-map* (kbd "C-M-s-t") '*root-map*)
+
+;; (run-shell-command "nm-applet")
+;; (run-shell-command "blueman-applet")

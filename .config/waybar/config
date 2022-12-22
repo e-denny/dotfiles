@@ -1,0 +1,77 @@
+// -*- mode: json -*-
+{
+    "layer": "top",
+    "position": "bottom",
+    "height": 30,
+    // Choose the order of the modules
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["cpu", "memory", "battery", "network", "clock", "tray"],
+    // Modules configuration
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}: {icon}",
+        "persistent_workspaces": {
+            "0": ["eDP-1"],
+            "1": ["DP-1"],
+            "2": ["DP-1"],
+            "3": ["DP-1"],
+            "4": ["DP-1"]
+        },
+        "format-icons": {
+            "0": "",
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
+    "sway/mode": {
+        "format": " {}",
+        "max-length": 50
+    },
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 50,
+        "rewrite": {
+           "(.*) - Mozilla Firefox": "🌎 $1",
+           "(.*) - zsh": " [$1]"
+       }
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    },
+    "clock": {
+        // I prefer it if this shows the date first
+        // format: weekday abbrev, YYYY-MM-DD
+        "format": "{:%H:%M %a %F}",
+        "format-alt": "{:%a %F}"
+    },
+    "cpu": {
+        "format": "cpu: {usage}% "
+    },
+    "memory": {
+        "format": "mem: {}% "
+    },
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "bat": "BAT0",
+        "format": "{capacity}% {icon}",
+        "format-icons": ["", "", "", "", ""],
+    },
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
+        "format-disconnected": "",
+        "tooltip-format-wifi": "Signal Strenght: {signalStrength}% | Down Speed: {bandwidthDownBits}, Up Speed: {bandwidthUpBits}"
+    }
+}

@@ -1,0 +1,111 @@
+/* -*- mode: css -*- */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: DejaVu Sans Mono, sans-serif;
+    font-size: 18px;
+    min-height: 0;
+}
+
+window#waybar {
+    /* background: rgba(43, 48, 59, 0.5); */
+    /* background: transparent; */
+    background: rgba(43, 48, 59, 0.5);
+    /* border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
+    color: #e3e3e3;
+}
+
+#workspaces button {
+    padding: 2px 10px;
+    background: rgba(43, 48, 59, 0.5);
+    /* background: transparent; */
+    color: white;
+    border-bottom: 3px solid transparent;
+}
+
+#workspaces button.focused {
+    /* background: #64727D; */
+    background: transparent;
+    border-bottom: 3px solid #BF6F46;
+}
+
+#mode {
+    background: rgba(43, 48, 59, 0.5);
+    border-bottom: 3px solid white;
+}
+
+#window {
+    /* text-align: left; */
+}
+
+#clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #custom-fuzzyclock, #tray, #mode {
+    padding: 2px 15px;
+    margin: 0px 0px;
+    background: rgba(43, 48, 59, 0.5);
+    color: #e3e3e3;
+}
+
+#clock {
+    /* background-color: #64727D; */
+}
+
+#battery {
+    /* background-color: #ffffff; */
+    background: rgba(43, 48, 59, 0.5);
+}
+
+#battery.charging {
+    /* background-color: #26A65B; */
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: black;
+    }
+}
+
+#battery.warning:not(.charging) {
+    background: #f53c3c;
+    color: white;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#cpu {
+    /* background: #2ecc71; */
+}
+
+#memory {
+}
+
+#network {
+}
+
+#network.disconnected {
+    background: #f53c3c;
+}
+
+#pulseaudio {
+}
+
+#pulseaudio.muted {
+    background: #90b1b1;
+    color: #2a5c45;
+}
+
+#custom-spotify {
+    /* background: #66cc99; */
+    background: #64727D;
+    color: #2a5c45;
+}
+
+#custom-fuzzyclock {
+    background: transparent;
+}
+
+#tray {
+}
