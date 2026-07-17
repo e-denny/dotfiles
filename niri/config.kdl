@@ -1,0 +1,372 @@
+input {
+    keyboard {
+        xkb {
+            // layout "us"
+            // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
+            // options "ctrl:lctl_meta"
+        }
+    }
+
+    touchpad {
+        tap
+        // dwt
+        // dwtp
+        natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+    }
+
+    mouse {
+        // natural-scroll
+        // accel-speed 0.2
+        // accel-profile "flat"
+    }
+
+    focus-follows-mouse
+}
+
+environment {
+  DISPLAY ":0"
+  XDG_CURRENT_DESKTOP "niri"
+  QT_QPA_PLATFORM "wayland"
+  ELECTRON_OZONE_PLATFORM_HINT "auto"
+  QT_QPA_PLATFORMTHEME "gtk3"
+  QT_QPA_PLATFORMTHEME_QT6 "gtk3"
+  EDITOR "nvim"
+}
+
+/-cursor {
+    // xcursor-theme "breeze_cursors"
+    xcursor-size 48
+}
+
+xwayland-satellite {
+    // off
+    path "xwayland-satellite"
+}
+
+output "HDMI-A-1" {
+    mode "3840x2160@60.000"
+//    scale 1.25
+    transform "normal"
+}
+
+layout {
+    gaps 15
+    center-focused-column "never"
+     background-color "transparent"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    preset-window-heights {
+        proportion 0.33333
+        proportion 0.5
+        proportion 1.0
+    }
+
+    default-column-width { proportion 0.33333; }
+
+    focus-ring {
+        off
+        width 4
+        active-color "#7fc8ff"
+        inactive-color "#505050"
+        // active-gradient from="#80c8ff" to="#bbddff" angle=45
+        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+    }
+
+    border { 
+        // off
+        width 3
+        active-color "#ffc87f"
+        inactive-color "#505050"
+        // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
+        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+    }
+
+    struts {
+        // left 16
+        // right 16
+        // top 64
+        // bottom 64
+    }
+
+    shadow {
+        on
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#0007"
+        draw-behind-window true
+    }
+}
+
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+spawn-at-startup "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
+spawn-at-startup "dms" "run"
+// spawn-at-startup "waybar"
+// spawn-at-startup "swww-daemon"
+// spawn-at-startup "mako"
+// spawn-at-startup "waypaper" "--restore"
+spawn-at-startup "niriswitcher"
+spawn-at-startup "udiskie" "-tray" " &"
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+animations {
+    // off
+    // slowdown 3.0
+}
+
+layer-rule {
+    match namespace="^launcher$"
+    shadow {
+        on
+    }
+    opacity 0.95
+}
+
+layer-rule {
+    match namespace="^quickshell$"
+    place-within-backdrop true
+}
+
+// Open DMS windows as floating by default
+window-rule {
+    match app-id=r#"org.quickshell$"#
+    open-floating true
+}
+
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+window-rule {
+    match app-id=r#"^blueman-manager$"#
+    open-floating true
+    default-column-width { proportion 0.33333; }
+    default-window-height { proportion 0.5; }
+ }
+
+window-rule {
+    match app-id=r#"^org.gnome.Calculator$"#
+    default-column-width { proportion 0.25; }
+    default-window-height { proportion 0.3333; }
+ }
+
+
+
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+    // block-out-from "screencast"
+}
+
+window-rule {
+    match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+binds {
+    Super+T { spawn "kitty"; }
+    // Application Launchers
+    Super+D hotkey-overlay-title="Application Launcher" {
+        spawn "dms" "ipc" "call" "spotlight" "toggle";
+    }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    Super+Q { close-window; }
+    Super+O { toggle-overview; }
+
+    Super+Left { focus-column-left; }
+    Super+Down { focus-window-down; }
+    Super+Up { focus-window-up; }
+    Super+Right { focus-column-right; }
+
+    Super+Shift+Left  { move-column-left; }
+    // Super+Shift+Down  { move-window-down; }
+    // Super+Shift+Up    { move-window-up; }
+    Super+Shift+Right { move-column-right; }
+
+    // Alternative commands that move across workspaces when reaching
+    // the first or last window in a column.
+    // Mod+J     { focus-window-or-workspace-down; }
+    // Mod+K     { focus-window-or-workspace-up; }
+    Super+Shift+Down      { move-window-down-or-to-workspace-down; }
+    Super+Shift+Up     { move-window-up-or-to-workspace-up; }
+
+    Super+Home { focus-column-first; }
+    Super+End  { focus-column-last; }
+
+    // Mod+Shift+Left  { focus-monitor-left; }
+    // Mod+Shift+Down  { focus-monitor-down; }
+    // Mod+Shift+Up    { focus-monitor-up; }
+    // Mod+Shift+Right { focus-monitor-right; }
+    // Mod+Shift+H     { focus-monitor-left; }
+    // Mod+Shift+J     { focus-monitor-down; }
+    // Mod+Shift+K     { focus-monitor-up; }
+    // Mod+Shift+L     { focus-monitor-right; }
+
+    // Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+    // Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
+    // Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
+    // Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+    // Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+    // Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
+    // Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
+    // Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+
+    // Alternatively, there are commands to move just a single window:
+    // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
+    // ...
+
+    // And you can also move a whole workspace to another monitor:
+    // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+    // ...
+
+    Super+Alt+Down      { focus-workspace-down; }
+    Super+Alt+Up      { focus-workspace-up; }
+    Super+Alt+Page_Down { move-column-to-workspace-down; }
+    Super+Alt+Page_Up   { move-column-to-workspace-up; }
+
+    // Mod+Ctrl+Page_Down { move-window-to-workspace-down; }
+    // ...
+
+    // Mod+Shift+Page_Down { move-workspace-down; }
+    // Mod+Shift+Page_Up   { move-workspace-up; }
+    //Super+F       { move-window-to-workspace-down; }
+    //Super+V       { move-window-to-workspace-up; }
+
+    // You can bind mouse wheel scroll ticks using the following syntax.
+    // These binds will change direction based on the natural-scroll setting.
+    //
+    // To avoid scrolling through workspaces really fast, you can use
+    // the cooldown-ms property. The bind will be rate-limited to this value.
+    // You can set a cooldown on any bind, but its most useful for the wheel.
+    Super+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+    Super+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+    // Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    // Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    // Usually scrolling up and down with Shift in applications results in
+    // horizontal scrolling; these binds replicate that.
+    Super+Shift+WheelScrollDown      { focus-column-right; }
+    Super+Shift+WheelScrollUp        { focus-column-left; }
+    // Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    // Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    // Super+1 { focus-workspace 1; }
+    // Super+2 { focus-workspace 2; }
+    // Super+3 { focus-workspace 3; }
+    // Super+4 { focus-workspace 4; }
+    // Mod+Ctrl+1 { move-column-to-workspace 1; }
+    // Mod+Ctrl+2 { move-column-to-workspace 2; }
+    // Mod+Ctrl+3 { move-column-to-workspace 3; }
+    // Mod+Ctrl+4 { move-column-to-workspace 4; }
+
+    // Alternatively, there are commands to move just a single window:
+    // Mod+Ctrl+1 { move-window-to-workspace 1; }
+
+    // Switches focus between the current and the previous workspace.
+    // Mod+Tab { focus-workspace-previous; }
+
+    // Ctrl+Alt+Super+Comma  { consume-window-into-column; }
+    // Ctrl+Alt+Super+Period { expel-window-from-column; }
+
+    // There are also commands that consume or expel a single window to the side.
+    Super+Comma  { consume-or-expel-window-left; }
+    Super+Period { consume-or-expel-window-right; }
+
+    Super+R { switch-preset-column-width; }
+    Super+Shift+R { switch-preset-window-height; }
+    Super+F { maximize-column; }
+    Super+C { center-column; }
+
+    Super+V { toggle-window-floating; }
+
+
+    // Finer width adjustments.
+    // This command can also:
+    // * set width in pixels: "1000"
+    // * adjust width in pixels: "-5" or "+5"
+    // * set width as a percentage of screen width: "25%"
+    // * adjust width as a percentage of screen width: "-10%" or "+10%"
+    // Pixel sizes use logical, or scaled, pixels. I.e. on an output with scale 2.0,
+    // set-column-width "100" will make the column occupy 200 physical screen pixels.
+    // Mod+Minus { set-column-width "-10%"; }
+    // Mod+Equal { set-column-width "+10%"; }
+
+    // Finer height adjustments when in column with other windows.
+    Super+Minus { set-column-width "-10%"; }
+    Super+Equal { set-column-width "+10%"; }
+
+    // Actions to switch layouts.
+    // Note: if you uncomment these, make sure you do NOT have
+    // a matching layout switch hotkey configured in xkb options above.
+    // Having both at once on the same hotkey will break the switching,
+    // since it will switch twice upon pressing the hotkey (once by xkb, once by niri).
+    // Mod+Space       { switch-layout "next"; }
+    // Mod+Shift+Space { switch-layout "prev"; }
+
+    // Print { screenshot; }
+    // Ctrl+Print { screenshot-screen; }
+    // Alt+Print { screenshot-window; }
+
+    // The quit action will show a confirmation dialog to avoid accidental exits.
+    Super+E { quit; }
+
+    Super+Tab repeat=false { spawn "niriswitcherctl" "show" "--window"; }
+    Super+Shift+Tab repeat=false { spawn "niriswitcherctl" "show" "--workspace"; }
+
+   Mod+V hotkey-overlay-title="Clipboard Manager" {
+      spawn "dms" "ipc" "call" "clipboard" "toggle";
+   }
+   Mod+M hotkey-overlay-title="Task Manager" {
+      spawn "dms" "ipc" "call" "processlist" "focusOrToggle";
+   }
+   Mod+N hotkey-overlay-title="Notification Center" {
+      spawn "dms" "ipc" "call" "notifications" "toggle";
+   }
+   Mod+Comma hotkey-overlay-title="Settings" {
+      spawn "dms" "ipc" "call" "settings" "focusOrToggle";
+   }
+   Mod+P hotkey-overlay-title="Notepad" {
+      spawn "dms" "ipc" "call" "notepad" "toggle";
+   }
+   Super+Alt+L hotkey-overlay-title="Lock Screen" {
+      spawn "dms" "ipc" "call" "lock" "lock";
+   }
+   Mod+C hotkey-overlay-title="Control Center" {
+      spawn "dms" "ipc" "call" "control-center" "toggle";
+   }
+// Night mode toggle
+   Mod+Shift+N allow-when-locked=true {
+      spawn "dms" "ipc" "call" "night" "toggle";
+  }
+}
+
+include "dms/colors.kdl"
+include "dms/layout.kdl"
+include "dms/alttab.kdl"
+include "dms/binds.kdl"
+
+include "dms/outputs.kdl"
+
+include "dms/windowrules.kdl"

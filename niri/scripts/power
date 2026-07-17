@@ -1,0 +1,21 @@
+#!/bin/sh
+
+choice=$(printf "󰍃 Logout\n⏾ Suspend\n Reboot\n Shutdown" | fuzzel --dmenu --prompt "system> " --placeholder "Select action" -l 4)
+
+case "$choice" in
+    "󰍃 Logout")
+        niri msg action quit --skip-confirmation
+        ;;
+    " Shutdown")
+        confirm=$(printf "no\nyes" | fuzzel --dmenu --prompt "shutdown?> " --placeholder "Confirm shutdown" -l 2)
+        [ "$confirm" = "yes" ] && systemctl poweroff
+        ;;
+    " Reboot")
+        confirm=$(printf "no\nyes" | fuzzel --dmenu --prompt "reboot?> " --placeholder "Confirm reboot" -l 2)
+        [ "$confirm" = "yes" ] && systemctl reboot
+        ;;
+    "⏾ Suspend")
+        confirm=$(printf "no\nyes" | fuzzel --dmenu --prompt "sleep?> " --placeholder "Confirm sleep" -l 2)
+        [ "$confirm" = "yes" ] && systemctl suspend
+        ;;
+esac

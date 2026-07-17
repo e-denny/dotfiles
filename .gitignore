@@ -1,0 +1,14 @@
+*
+!.gitignore
+!kitty/
+!kitty/**
+!niri/
+!niri/**
+!nvim/
+!nvim/**
+!tmux/
+!tmux/**
+
+# niri backups
+niri/*.bak
+niri/*.backup*

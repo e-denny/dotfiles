@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rtk ls *)",
+      "Bash(rtk grep *)",
+      "Bash(rtk find *)",
+      "Bash(rtk git *)",
+      "Bash(git *)",
+      "Bash(rtk gh *)",
+      "Bash(gh repo *)",
+      "Bash(rtk read *)",
+      "Bash(rtk markdownlint *)",
+      "Bash(markdownlint-cli2 --version)",
+      "WebSearch",
+      "Bash(gh api *)"
+    ]
+  }
+}
