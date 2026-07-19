@@ -8,6 +8,7 @@ return {
       "nvim-lua/plenary.nvim",
     },
     opts = {
+      log_level = vim.log.levels.ERROR,
       workspaces = {
         {
           name = "obsidian-vault",
