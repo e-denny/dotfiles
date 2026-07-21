@@ -1,0 +1,5 @@
+onboarding = false
+prefix = "ctrl+a"
+
+[keys]
+"prefix+shift+r" = "reload_config"

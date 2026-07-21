@@ -8,6 +8,8 @@
 !nvim/**
 !tmux/
 !tmux/**
+!herdr/
+!herdr/**
 
 # niri backups
 niri/*.bak
