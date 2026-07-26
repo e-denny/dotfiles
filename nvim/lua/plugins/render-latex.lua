@@ -1,6 +1,6 @@
 return {
   {
-    "dimfeld/render-latex.nvim",
+    "techwizrd/render-latex.nvim",
     dependencies = { "3rd/image.nvim" },
     opts = {
       render = {

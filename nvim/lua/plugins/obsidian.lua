@@ -20,6 +20,7 @@ return {
         },
       },
       -- Use wikilinks by default (Obsidian style)
+      ui = { enable = false },
       preferred_link_style = "wiki",
       -- Follow wikilinks with gf
       follow_url_func = function(url)
