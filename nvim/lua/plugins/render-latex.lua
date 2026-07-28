@@ -5,8 +5,8 @@ return {
     opts = {
       render = {
         preset = "match_text",
-        inline = "conceal",
-        inline_symbols = true,
+        inline = false,
+        inline_symbols = false,
         live_preview = true,
         hide_on_cmdline = false,
       },
