@@ -58,7 +58,6 @@ prefix = "ctrl+a"
 # help = "prefix+?"
 # settings = "prefix+s"
 # detach = "prefix+q"
-"prefix+shift+r" = "reload_config"
 # open_notification_target = "prefix+o"
 # workspace_picker = "prefix+w"
 # goto = "prefix+g"
@@ -109,6 +108,11 @@ split_vertical = "prefix+|"
 # Custom commands use the same binding syntax.
 # type = "shell" runs detached in the background.
 # type = "pane" opens a temporary pane and closes it when the command exits.
+[[keys.command]]
+key = "prefix+shift+r"
+type = "shell"
+command = "herdr server reload-config"
+
 # [[keys.command]]
 # key = "prefix+alt+g"
 # type = "pane"
