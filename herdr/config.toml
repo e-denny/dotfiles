@@ -171,7 +171,6 @@ show_agent_labels_on_pane_borders = true
 # accent = "cyan"
 
 # Background notification popup delivery
-agent_panel_sort = "spaces"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
@@ -201,7 +200,7 @@ agent_panel_sort = "spaces"
 [session]
 # Resume supported AI-agent panes into their native conversation sessions after
 # a Herdr server restart.
-# resume_agents_on_restore = true
+resume_agents_on_restore = true
 
 [remote]
 # Whether herdr manages the ssh config used for the `herdr --remote` bridge.
