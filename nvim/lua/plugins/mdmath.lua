@@ -1,6 +1,7 @@
 return {
   {
-    "Thiago4532/mdmath.nvim",
+    "e-denny/mdmath.nvim",
+    branch = "inline-baseline-sizing",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
@@ -12,6 +13,8 @@ return {
       hide_on_insert = true,
       dynamic = true,
       dynamic_scale = 0.7,
+      baseline_frac = 0.783,
+      inline_scale = 0.8,
     },
   },
 }
