@@ -1,7 +1,7 @@
 return {
   {
     "e-denny/mdmath.nvim",
-    branch = "inline-baseline-sizing",
+    branch = "main",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
