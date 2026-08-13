@@ -35,7 +35,7 @@ hi Normal guifg=#000000 guibg=#cdcdcd guisp=NONE gui=NONE ctermfg=16 ctermbg=252
 hi ColorColumn guifg=#000000 guibg=#e5e5e5 guisp=NONE gui=NONE ctermfg=16 ctermbg=254 cterm=NONE term=reverse
 hi Comment guifg=#0000ff guibg=NONE guisp=NONE gui=NONE ctermfg=21 ctermbg=NONE cterm=NONE term=bold
 hi Conceal guifg=#878787 guibg=NONE guisp=NONE gui=NONE ctermfg=102 ctermbg=NONE cterm=NONE term=NONE
-hi Constant guifg=#ff00ff guibg=#d6d6d6 guisp=NONE gui=NONE ctermfg=201 ctermbg=254 cterm=NONE term=NONE
+hi Constant guifg=#ff00ff guibg=NONE guisp=NONE gui=NONE ctermfg=201 ctermbg=NONE cterm=NONE term=NONE
 hi Cursor guifg=#cdcdcd guibg=#2e8b57 guisp=NONE gui=NONE ctermfg=252 ctermbg=29 cterm=NONE term=reverse
 hi CursorColumn guifg=NONE guibg=#bdbdbd guisp=NONE gui=NONE ctermfg=NONE ctermbg=250 cterm=NONE term=NONE
 hi CursorLine guifg=NONE guibg=#bdbdbd guisp=NONE gui=NONE ctermfg=NONE ctermbg=250 cterm=NONE term=underline
