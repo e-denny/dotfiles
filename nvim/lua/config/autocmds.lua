@@ -8,7 +8,7 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = "morning",
+  pattern = { "morning", "edgar-morning" },
   callback = function()
     vim.api.nvim_set_hl(0, "Cursor", { fg = "#ffffff", bg = "#000000" })
   end,
