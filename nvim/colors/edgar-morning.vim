@@ -96,6 +96,7 @@ hi WarningMsg guifg=#6a0dad guibg=NONE guisp=NONE gui=bold ctermfg=55 ctermbg=NO
 hi WildMenu guifg=#000000 guibg=#ffff00 guisp=NONE gui=bold ctermfg=16 ctermbg=226 cterm=bold term=bold
 hi lCursor guifg=#cdcdcd guibg=#a52a2a guisp=NONE gui=NONE ctermfg=252 ctermbg=124 cterm=NONE term=NONE
 
+
 if s:tgc || s:t_Co >= 256
   finish
 endif

@@ -7,10 +7,23 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
+local function apply_edgar_morning_overrides()
+  vim.api.nvim_set_hl(0, "Cursor", { fg = "#ffffff", bg = "#000000" })
+  vim.api.nvim_set_hl(0, "ObsidianRefText", { fg = "#9f75bb", underline = true })
+end
+
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = { "morning", "edgar-morning" },
+  callback = apply_edgar_morning_overrides,
+})
+
+-- Re-apply after obsidian installs its highlight groups on buffer enter
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*.md",
   callback = function()
-    vim.api.nvim_set_hl(0, "Cursor", { fg = "#ffffff", bg = "#000000" })
+    if vim.g.colors_name == "edgar-morning" then
+      vim.api.nvim_set_hl(0, "ObsidianRefText", { fg = "#9f75bb", underline = true })
+    end
   end,
 })
 
