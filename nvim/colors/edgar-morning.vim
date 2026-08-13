@@ -96,6 +96,19 @@ hi WarningMsg guifg=#6a0dad guibg=NONE guisp=NONE gui=bold ctermfg=55 ctermbg=NO
 hi WildMenu guifg=#000000 guibg=#ffff00 guisp=NONE gui=bold ctermfg=16 ctermbg=226 cterm=bold term=bold
 hi lCursor guifg=#cdcdcd guibg=#a52a2a guisp=NONE gui=NONE ctermfg=252 ctermbg=124 cterm=NONE term=NONE
 
+" Re-apply plugin highlight overrides after plugins install their defaults.
+" Uses BufEnter so it fires after obsidian.nvim installs its hl_groups.
+lua << EOF
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = vim.api.nvim_create_augroup("EdgarMorningPluginHl", { clear = true }),
+  pattern = "*.md",
+  callback = function()
+    if vim.g.colors_name == "edgar-morning" then
+      vim.api.nvim_set_hl(0, "ObsidianRefText", { fg = "#9f75bb", underline = true })
+    end
+  end,
+})
+EOF
 
 if s:tgc || s:t_Co >= 256
   finish

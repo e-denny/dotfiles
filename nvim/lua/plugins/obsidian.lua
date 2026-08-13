@@ -20,7 +20,12 @@ return {
         },
       },
       -- Use wikilinks by default (Obsidian style)
-      ui = { enabled = false },
+      ui = {
+        enabled = false,
+        hl_groups = {
+          ObsidianRefText = { underline = true, fg = "#9f75bb" },
+        },
+      },
       disable_frontmatter = true,
       preferred_link_style = "wiki",
       -- Follow wikilinks with gf
