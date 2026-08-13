@@ -104,7 +104,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
   pattern = "*.md",
   callback = function()
     if vim.g.colors_name == "edgar-morning" then
-      vim.api.nvim_set_hl(0, "ObsidianRefText", { fg = "#9f75bb", underline = true })
+      vim.api.nvim_set_hl(0, "ObsidianRefText", { fg = "#8f69a8", underline = true })
     end
   end,
 })
