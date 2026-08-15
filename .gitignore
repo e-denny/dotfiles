@@ -10,6 +10,8 @@
 !tmux/**
 !herdr/
 !herdr/**
+!herdr-resurrect/
+!herdr-resurrect/**
 
 # niri backups
 niri/*.bak
