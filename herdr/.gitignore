@@ -2,3 +2,9 @@
 *.sock
 release-notes.json
 session.json
+
+# herdr runtime state
+.plugins.lock
+plugins.json
+session-history.json
+plugins/

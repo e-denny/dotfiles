@@ -16,3 +16,13 @@
 # niri backups
 niri/*.bak
 niri/*.backup*
+
+# tmux: vendored plugin checkouts (installed via tpm)
+tmux/plugins/
+
+# kitty: generated theme + backup
+kitty/current-theme.conf
+kitty/kitty.conf.bak
+
+# nvim: auto-saved session files
+**/Session.vim
