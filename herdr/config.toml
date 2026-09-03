@@ -50,6 +50,11 @@ auto_switch = false
 # Prefix key to enter prefix mode (default: "ctrl+b")
 prefix = "ctrl+a"
 
+# Detach moved off prefix+q so prefix+q can save a resurrect snapshot and exit
+# herdr (see [[keys.command]] below). prefix+shift+q keeps plain detach
+# (leave the headless server running).
+detach = "prefix+shift+q"
+
 # Prefix-mode actions
 # help = "prefix+?"
 # settings = "prefix+s"
@@ -132,6 +137,15 @@ description = "vim-aware pane right"
 key = "prefix+shift+r"
 type = "shell"
 command = "herdr server reload-config"
+
+# prefix+q: write a herdr-resurrect snapshot of everything currently running
+# (nvim, agents, ...), then stop the server cleanly (persists session.json too).
+# Detach is now prefix+shift+q if you want to leave the server running.
+[[keys.command]]
+key = "prefix+q"
+type = "shell"
+command = "herdr plugin action invoke ntindle.herdr-resurrect.save; herdr server stop"
+description = "save resurrect snapshot, then exit herdr"
 
 # [[keys.command]]
 # key = "prefix+alt+g"
