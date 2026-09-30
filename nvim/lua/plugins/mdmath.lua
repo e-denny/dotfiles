@@ -17,6 +17,9 @@ return {
       -- Open the image/attachment link under the cursor with `gx`
       -- (Obsidian ![[...]] / [[...svg|...]] or markdown ![...](...)).
       open_image_key = "gx",
+      -- Display inline images 100 terminal cells wide (about 100 characters
+      -- at the current kitty font size), preserving aspect ratio.
+      image_width = 100,
       -- Toggle automatic in-place image previews on/off.
       toggle_images_key = "<leader>ti",
     },
