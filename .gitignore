@@ -24,5 +24,8 @@ tmux/plugins/
 kitty/current-theme.conf
 kitty/kitty.conf.bak
 
+# herdr: plugin backups
+herdr/plugin-backup-*/
+
 # nvim: auto-saved session files
 **/Session.vim
