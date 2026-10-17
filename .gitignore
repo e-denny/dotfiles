@@ -12,6 +12,10 @@
 !herdr/**
 !herdr-resurrect/
 !herdr-resurrect/**
+!umbriel/
+!umbriel/**
+!noctalia/
+!noctalia/**
 
 # niri backups
 niri/*.bak
