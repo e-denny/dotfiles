@@ -2,9 +2,6 @@ return {
   {
     "e-denny/mathdown.nvim",
     branch = "main",
-    -- The repository is mathdown.nvim; the Lua module and :MdMath command keep
-    -- the `mdmath` name.
-    main = "mdmath",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
     },
