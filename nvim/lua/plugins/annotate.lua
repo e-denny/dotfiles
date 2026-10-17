@@ -2,10 +2,11 @@ return {
   {
     "e-denny/annotate.nvim",
     branch = "main",
-    -- `setup()` only activates when Neovim was started with a `.md` argument,
-    -- so loading on the markdown filetype is harmless for ordinary editing;
-    -- it turns on review mode only for `nvim notes.md`.
-    ft = "markdown",
-    opts = {},
+    -- Review mode is explicit: opening a Markdown file must stay ordinary
+    -- editing, with no sidecar and no split. Load on demand only — from
+    -- `:Annotate notes.md`, or from Pi's `/annotate` command, which sets
+    -- ANNOTATE_FILE and calls require("annotate").setup().
+    cmd = "Annotate",
+    module = "annotate",
   },
 }
