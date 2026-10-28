@@ -2,6 +2,15 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- vim-tmux-navigator: these override LazyVim's default <C-h/j/k/l> window maps so
+-- the cursor crosses from nvim splits into tmux panes at the edge of the grid.
+local map = vim.keymap.set
+map("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>", { desc = "Go to left window/pane" })
+map("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>", { desc = "Go to lower window/pane" })
+map("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>", { desc = "Go to upper window/pane" })
+map("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>", { desc = "Go to right window/pane" })
+map("n", "<C-\\>", "<cmd>TmuxNavigatePrevious<cr>", { desc = "Go to previous window/pane" })
+
 vim.keymap.set("n", "<leader>pv", function()
   local file = vim.fn.expand("%:p")
   local vaults = {
