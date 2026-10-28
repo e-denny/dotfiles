@@ -16,6 +16,8 @@
 !umbriel/**
 !noctalia/
 !noctalia/**
+!workmux/
+!workmux/**
 
 # niri backups
 niri/*.bak
