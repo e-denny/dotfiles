@@ -16,21 +16,10 @@ windows:
   - name: dashboard
     panes:
       - command: "workmux dashboard -t worktrees"
-  - name: zsh
+  - name: agent
     panes:
       - focus: true
-      # command: ""
-      # - split: horizontal
-      # - size: 20
-  - name: shell
-    panes:
-      - focus: false
         command: "ls -a"
       - split: horizontal
         command: "pi"
-        # size: 50
-  - name: agent
-    panes:
-      - focus: false
-        command: <agent>
         # size: 50
