@@ -7,4 +7,9 @@ session.json
 .plugins.lock
 plugins.json
 session-history.json
+sessions/
+session-snapshots/
 plugins/
+
+# herdr runtime sockets (also herdr.sock.agent)
+*.sock*

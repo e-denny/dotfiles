@@ -9,7 +9,7 @@ onboarding = false
 # Built-in themes: catppuccin, terminal, tokyo-night, dracula, nord,
 #                  gruvbox, one-dark, solarized, kanagawa, rose-pine,
 #                  vesper
-name = "one-dark"
+name = "dracula"
 
 # Follow host terminal light/dark appearance and switch Herdr UI themes.
 # Existing manual behavior is unchanged unless this is true.
@@ -138,14 +138,15 @@ key = "prefix+shift+r"
 type = "shell"
 command = "herdr server reload-config"
 
-# prefix+q: write a herdr-resurrect snapshot of everything currently running
-# (nvim, agents, ...), then stop the server cleanly (persists session.json too).
-# Detach is now prefix+shift+q if you want to leave the server running.
+# prefix+q: write a herdr-continuum snapshot of everything currently running
+# (nvim, dev servers, TUIs, ...), then stop the server cleanly (session.json is
+# saved too). The startup hook restores the snapshot on the next boot.
+# Detach is prefix+shift+q if you want to leave the server running.
 [[keys.command]]
 key = "prefix+q"
 type = "shell"
-command = "herdr plugin action invoke ntindle.herdr-resurrect.save; herdr server stop"
-description = "save resurrect snapshot, then exit herdr"
+command = "node /home/edgar/Projects/herdr-continuum/bin/save.js; herdr server stop"
+description = "snapshot with herdr-continuum, then exit herdr"
 
 # [[keys.command]]
 # key = "prefix+alt+g"
