@@ -235,6 +235,11 @@ default_extent_fraction = 0.5
 blur = true
 blur_optimized = false
 
+# New Emacs frames open at the full output width instead of the 0.5 default.
+[[window_rule]]
+match.app_id = "^[Ee]macs"
+default_scrolling_extent = 1.0
+
 [[window_rule]]
 match.app_id = "^dev.noctalia.Noctalia$"
 default_floating = true
